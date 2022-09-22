@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { StatusBar } from "react-native";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import HomeScreen from "./Screens/HomeScreen";
+import RestaurantScreen from "./Screens/RestaurantScreen";
+import BasketScreen from "./Screens/BasketScreen";
+import PreparingOrderScreen from "./Screens/PreparingOrderScreen";
+import DeliveryScreen from "./Screens/DeliveryScreen";
 
-export default function App() {
+export default function Navigation() {
+  const Stack = createStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar barStyle="dark-content" />
+      <NavigationContainer>
+        <Provider store={store}>
+          <Stack.Navigator>
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="Restaurant" component={RestaurantScreen} />
+            <Stack.Screen name="Basket" component={BasketScreen} options={{presentation: "modal", headerShown: false}}  />
+            <Stack.Screen name="PreparingOrder" component={PreparingOrderScreen} options={{presentation: "fullScreenModal", headerShown: false}}  />
+            <Stack.Screen name="Delivery" component={DeliveryScreen} options={{presentation: "fullScreenModal", headerShown: false}}  />
+          </Stack.Navigator>
+          </Provider>
+      </NavigationContainer>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
